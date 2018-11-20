@@ -1,4 +1,4 @@
-<template id="flowioeditor">
+<template id="analysisioeditor">
     <!-- eslint-disable max-len -->
     <b-container>
         <b-row>

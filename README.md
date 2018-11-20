@@ -1,6 +1,6 @@
 # client
 
-> A client for the Sympathy for the web API
+> A client for the Analysis Web API
 
 ## Build Setup
 
@@ -19,3 +19,7 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Icons
+
+https://fontawesome.com/

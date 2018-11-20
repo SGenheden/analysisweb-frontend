@@ -5,7 +5,7 @@
             Id:<h4>{{ job.id }}</h4><br>
             Label:<h4>{{ job.label }}</h4><br>
             Date:<h4>{{ job.date }}</h4><br>
-            Flow:<h4>{{ job.flow.label }}</h4><br>
+            Analysis:<h4>{{ job.analysis.label }}</h4><br>
             Measurement:
             <h4 v-if="job.measurement == null"> N/A</h4>
             <h4 v-else>{{ job.measurement.label }}</h4>

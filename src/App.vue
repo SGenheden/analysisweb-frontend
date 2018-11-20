@@ -4,21 +4,21 @@
     <b-navbar toggleable="md" type="light" variant="light">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-        <b-navbar-brand>Sympathy for the web</b-navbar-brand>
+        <b-navbar-brand>Analysis Web</b-navbar-brand>
 
         <b-collapse is-nav id="nav_collapse">
 
             <b-navbar-nav>
                 <b-nav-item href="#" @click="currentView='measurements'" :active="currentView==='measurements'">Measurements</b-nav-item>
-                <b-nav-item href="#" @click="currentView='flows'" :active="currentView==='flows'">Flows</b-nav-item>
+                <b-nav-item href="#" @click="currentView='analyses'" :active="currentView==='analyses'">Analyses</b-nav-item>
                 <b-nav-item href="#" @click="currentView='jobs'" :active="currentView==='jobs'">Jobs</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
     <div class="container">
-      <component :is="currentView" v-on:gotoJob="gotoJob($event)" v-on:hideJob="hideJob($event)" v-on:getMeasurements="getMeasurements" v-on:getJobs="getJobs" v-on:getFlows="getFlows"
-       :measurement_list=measurement_list :flow_list=flow_list :job_list=job_list :open_jobs=open_jobs :active_job=active_job
-       :measurement_meta=measurement_meta :flow_meta=flow_meta>
+      <component :is="currentView" v-on:gotoJob="gotoJob($event)" v-on:hideJob="hideJob($event)" v-on:getMeasurements="getMeasurements" v-on:getJobs="getJobs" v-on:getAnalyses="getAnalyses"
+       :measurement_list=measurement_list :analysis_list=analysis_list :job_list=job_list :open_jobs=open_jobs :active_job=active_job
+       :measurement_meta=measurement_meta :analysis_meta=analysis_meta>
       </component>
     </div>
   </div>
@@ -28,31 +28,31 @@
 import Papa from 'papaparse';
 import axios from 'axios';
 import measurements from './components/Measurements';
-import flows from './components/Flows';
+import analyses from './components/Analyses';
 import jobs from './components/Jobs';
 
 export default {
   name: 'App',
   components: {
     measurements,
-    flows,
+    analyses,
     jobs,
   },
   data() {
     return {
       currentView: 'jobs',
       measurement_list: [],
-      flow_list: [],
+      analysis_list: [],
       job_list: [],
       open_jobs: [],
       active_job: -1,
       measurement_meta: Object(),
-      flow_meta: Object(),
+      analysis_meta: Object(),
     };
   },
   created() {
     this.getMeasurements();
-    this.getFlows();
+    this.getAnalyses();
     this.getJobs();
     this.getMeta();
   },
@@ -62,11 +62,11 @@ export default {
       // eslint-disable-next-line
       console.error(view);
     },
-    getFlows() {
-      const path = 'http://localhost:5000/flows';
+    getAnalyses() {
+      const path = 'http://localhost:5000/analyses';
       axios.get(path)
         .then((response) => {
-          this.flow_list = response.data;
+          this.analysis_list = response.data;
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -87,7 +87,7 @@ export default {
             this.job_list[i].table_csv = Array.apply(null, Array(5)).map(() => { return []; });
             this.parseCSV(i);
           }
-          this.getFlows();
+          this.getAnalyses();
           this.getMeasurements();
         })
         .catch((error) => {
@@ -115,9 +115,9 @@ export default {
           // eslint-disable-next-line
           console.error(error);
         });
-      axios.get('http://localhost:5000/flows/meta')
+      axios.get('http://localhost:5000/analysis/meta')
         .then((response) => {
-          this.flow_meta = response.data;
+          this.analysis_meta = response.data;
         })
         .catch((error) => {
           // eslint-disable-next-line
